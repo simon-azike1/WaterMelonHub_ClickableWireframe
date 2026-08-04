@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Watermelon Hub System Wireframe</title>
+<style>
+  :root{
+    --bg:#f2f2f4;
+    --panel:#ffffff;
+    --border:#d4d4d8;
+    --border-dark:#a1a1aa;
+    --text:#18181b;
+    --muted:#71717a;
+    --accent:#2f6fed;
+    --accent-soft:#eaf1ff;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+  }
+  header{
+    padding:20px 28px 14px;
+    border-bottom:1px solid var(--border);
+    background:var(--panel);
+  }
+  header h1{margin:0;font-size:19px;letter-spacing:.2px;}
+  header p{margin:4px 0 0;color:var(--muted);font-size:13px;}
+
+  nav.tabs{
+    display:flex;gap:8px;flex-wrap:wrap;
+    padding:14px 28px;background:var(--panel);
+    border-bottom:1px solid var(--border);
+  }
+  nav.tabs button{
+    border:1px solid var(--border-dark);
+    background:#fff;
+    color:var(--text);
+    padding:7px 14px;
+    border-radius:6px;
+    font-size:13px;
+    cursor:pointer;
+  }
+  nav.tabs button.active{
+    background:var(--text);
+    color:#fff;
+    border-color:var(--text);
+  }
+  nav.tabs span.sep{color:var(--border-dark);align-self:center;font-size:12px;}
+
+  main{padding:26px 28px 60px;max-width:1180px;margin:0 auto;}
+
+  .device{
+    border:1px solid var(--border-dark);
+    border-radius:8px;
+    background:var(--panel);
+    overflow:hidden;
+    box-shadow:0 1px 3px rgba(0,0,0,.06);
+  }
+  .device-bar{
+    display:flex;align-items:center;gap:8px;
+    padding:9px 12px;
+    background:#e4e4e7;
+    border-bottom:1px solid var(--border-dark);
+  }
+  .dot{width:9px;height:9px;border-radius:50%;background:#c9c9cf;}
+  .url{
+    margin-left:8px;font-size:12px;color:var(--muted);
+    background:#fff;border:1px solid var(--border);
+    border-radius:4px;padding:3px 10px;flex:1;
+  }
+  .screen-frame{padding:22px;min-height:520px;}
+
+  .app-layout{display:flex;gap:0;min-height:480px;}
+  .sidebar{
+    width:180px;flex-shrink:0;
+    border-right:1px dashed var(--border-dark);
+    padding-right:16px;margin-right:20px;
+  }
+  .sidebar .brand{font-size:13px;font-weight:600;margin-bottom:18px;color:var(--muted);}
+  .side-item{
+    padding:9px 10px;margin-bottom:6px;border-radius:5px;
+    border:1px solid var(--border);font-size:13px;cursor:pointer;
+    background:#fafafa;
+  }
+  .side-item.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:600;}
+  .side-item:hover{border-color:var(--border-dark);}
+  .content{flex:1;min-width:0;}
+
+  h2.screen-title{margin:0 0 4px;font-size:16px;}
+  p.screen-sub{margin:0 0 18px;color:var(--muted);font-size:12.5px;}
+
+  .badge{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:16px;height:16px;border-radius:50%;
+    background:var(--accent);color:#fff;font-size:10px;font-weight:700;
+    margin-left:6px;flex-shrink:0;
+  }
+
+  .cards-row{display:flex;gap:14px;margin-bottom:18px;flex-wrap:wrap;}
+  .stat-card{
+    flex:1;min-width:130px;border:1px dashed var(--border-dark);
+    border-radius:6px;padding:14px;background:#fafafa;
+  }
+  .stat-card .label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;}
+  .stat-card .value{font-size:20px;font-weight:700;margin-top:6px;color:var(--border-dark);}
+
+  .panel{
+    border:1px solid var(--border);border-radius:6px;
+    padding:14px;margin-bottom:16px;background:#fff;
+  }
+  .panel h3{margin:0 0 10px;font-size:13px;}
+  .chartbox{
+    height:130px;border:1px dashed var(--border-dark);border-radius:5px;
+    background:repeating-linear-gradient(135deg,#f4f4f5,#f4f4f5 8px,#ececee 8px,#ececee 16px);
+    display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;
+  }
+  .barbox{height:40px;border:1px solid var(--border);border-radius:4px;margin-bottom:8px;background:#fafafa;}
+
+  table.wf{width:100%;border-collapse:collapse;font-size:12.5px;}
+  table.wf th{text-align:left;color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;padding:6px 8px;border-bottom:1px solid var(--border-dark);}
+  table.wf td{padding:9px 8px;border-bottom:1px solid var(--border);}
+  .pill{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;border:1px solid var(--border-dark);background:#f4f4f5;color:var(--muted);}
+  .btn{
+    display:inline-block;padding:7px 14px;border-radius:5px;font-size:12.5px;
+    border:1px solid var(--border-dark);background:#fafafa;cursor:pointer;color:var(--text);
+  }
+  .btn.primary{background:var(--text);color:#fff;border-color:var(--text);}
+  .btn.hot{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);cursor:pointer;}
+  .rowbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+
+  .kanban{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;}
+  .kcol{min-width:150px;flex:1;border:1px solid var(--border);border-radius:6px;background:#fafafa;padding:8px;}
+  .kcol h4{margin:0 0 8px;font-size:11px;text-transform:uppercase;color:var(--muted);}
+  .kcard{background:#fff;border:1px solid var(--border-dark);border-radius:5px;padding:8px;font-size:12px;margin-bottom:8px;}
+
+  .field{margin-bottom:10px;}
+  .field label{display:block;font-size:11px;color:var(--muted);margin-bottom:4px;}
+  .field .box{border:1px solid var(--border-dark);border-radius:5px;padding:8px 10px;background:#fafafa;font-size:12.5px;color:var(--muted);}
+
+  .lead-card{border:1px solid var(--border);border-radius:6px;padding:12px;margin-bottom:10px;background:#fff;}
+  .lead-card .top{display:flex;justify-content:space-between;font-size:13px;font-weight:600;}
+  .lead-card .meta{color:var(--muted);font-size:11.5px;margin-top:4px;}
+
+  .legend{
+    margin-top:18px;border-top:1px solid var(--border);padding-top:14px;
+  }
+  .legend h3{font-size:12px;text-transform:uppercase;color:var(--muted);margin:0 0 10px;letter-spacing:.4px;}
+  .legend-item{display:flex;gap:8px;font-size:13px;margin-bottom:7px;line-height:1.4;}
+  .legend-item .n{
+    flex-shrink:0;width:18px;height:18px;border-radius:50%;background:var(--accent);
+    color:#fff;font-size:10.5px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px;
+  }
+
+  /* Flow diagram */
+  .flow-wrap{display:flex;flex-direction:column;gap:34px;}
+  .lane{border:1px dashed var(--border-dark);border-radius:8px;padding:16px 18px 20px;position:relative;}
+  .lane-label{
+    position:absolute;top:-11px;left:14px;background:var(--bg);
+    padding:0 8px;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;
+  }
+  .flow-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+  .fbox{
+    border:1px solid var(--border-dark);border-radius:6px;background:#fff;
+    padding:12px 14px;font-size:12.5px;font-weight:600;min-width:110px;text-align:center;
+  }
+  .fbox.entry{background:var(--text);color:#fff;border-color:var(--text);}
+  .arrow{color:var(--border-dark);font-size:16px;}
+  .cross{
+    text-align:center;color:var(--accent);font-size:12px;font-weight:600;margin:4px 0;
+  }
+  .cross .arrow-v{font-size:18px;display:block;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Watermelon Hub; Internal Sales System</h1>
+  <p>Clickable wireframe · v1 · low-fidelity, structure &amp; flow only; visuals to follow in the mockup phase</p>
+</header>
+
+<nav class="tabs" id="tabs"></nav>
+
+<main>
+  <div class="device">
+    <div class="device-bar">
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      <div class="url" id="urlbar">whb.internal/flow</div>
+    </div>
+    <div class="screen-frame" id="frame"></div>
+  </div>
+</main>
+
+<script>
+const B = n => `<span class="badge">${n}</span>`;
+
+const sidebarAdmin = (active) => `
+  <div class="sidebar">
+    <div class="brand">WHB · ADMIN</div>
+    <div class="side-item ${active==='a-dashboard'?'active':''}" onclick="go('a-dashboard')">Dashboard</div>
+    <div class="side-item ${active==='a-agents'?'active':''}" onclick="go('a-agents')">Agents</div>
+    <div class="side-item ${active==='a-leads'?'active':''}" onclick="go('a-leads')">Lead Assignment</div>
+    <div class="side-item ${active==='a-approvals'?'active':''}" onclick="go('a-approvals')">Sale Approvals</div>
+    <div class="side-item" style="opacity:.55">Reports / Export</div>
+    <div class="side-item" style="opacity:.4">Log Out</div>
+  </div>`;
+
+const sidebarAgent = (active) => `
+  <div class="sidebar">
+    <div class="brand">WHB · AGENT</div>
+    <div class="side-item ${active==='g-pipeline'?'active':''}" onclick="go('g-pipeline')">My Pipeline</div>
+    <div class="side-item ${active==='g-lookup'?'active':''}" onclick="go('g-lookup')">Business Lookup</div>
+    <div class="side-item ${active==='g-lead'?'active':''}" onclick="go('g-lead')">Sales Sheet</div>
+    <div class="side-item" style="opacity:.4">Log Out</div>
+  </div>`;
+
+const screens = {
+
+  flow: {
+    label: 'System Flow',
+    url: 'whb.internal/flow',
+    legend: [
+      'Everyone starts at one login screen;the system decides which interface to show based on role.',
+      'Admin lane: oversee, assign, and approve. Agent lane: prospect, call, and sell.',
+      'The two lanes are not separate apps; they constantly hand work to each other. Assigned leads flow down to agents; submitted sale orders flow up for approval.'
+    ],
+    render: () => `
+      <h2 class="screen-title">How the system connects, end to end ${B(1)}</h2>
+      <p class="screen-sub">One login, two role-based experiences, two hand-off points between them ${B(2)}</p>
+      <div class="flow-wrap">
+        <div class="flow-row" style="justify-content:center;margin-bottom:6px;">
+          <div class="fbox entry" style="cursor:pointer" onclick="go('login')">Login</div>
+        </div>
+        <div class="lane">
+          <div class="lane-label">Admin</div>
+          <div class="flow-row">
+            <div class="fbox" style="cursor:pointer" onclick="go('a-dashboard')">Dashboard</div>
+            <span class="arrow">→</span>
+            <div class="fbox" style="cursor:pointer" onclick="go('a-agents')">Manage Agents</div>
+            <span class="arrow">→</span>
+            <div class="fbox" style="cursor:pointer" onclick="go('a-leads')">Assign Leads</div>
+            <span class="arrow">→</span>
+            <div class="fbox" style="cursor:pointer" onclick="go('a-approvals')">Approve Sale Orders</div>
+          </div>
+        </div>
+        <div class="cross">
+          <span class="arrow-v">⇅</span>
+          Leads assigned down to agents &nbsp;·&nbsp; sale orders submitted up for approval ${B(3)}
+        </div>
+        <div class="lane">
+          <div class="lane-label">Agent</div>
+          <div class="flow-row">
+            <div class="fbox" style="cursor:pointer" onclick="go('g-lookup')">Find Businesses</div>
+            <span class="arrow">→</span>
+            <div class="fbox" style="cursor:pointer" onclick="go('g-pipeline')">Work the Pipeline</div>
+            <span class="arrow">→</span>
+            <div class="fbox" style="cursor:pointer" onclick="go('g-lead')">Call &amp; Submit Order</div>
+          </div>
+        </div>
+      </div>
+    `
+  },
+
+  login: {
+    label: 'Login',
+    url: 'whb.internal/login',
+    legend: [
+      'Single entry point for both admins and agents; no separate admin URL to manage.',
+      'After logging in, the system reads the user\'s role and sends them to the right home screen automatically.'
+    ],
+    render: () => `
+      <h2 class="screen-title">Login ${B(1)}</h2>
+      <p class="screen-sub">Same screen for admins and agents ${B(2)}</p>
+      <div style="max-width:320px;margin:30px auto;border:1px solid var(--border);border-radius:8px;padding:26px;">
+        <div style="text-align:center;font-weight:700;margin-bottom:18px;">WATERMELON HUB</div>
+        <div class="field"><label>Email</label><div class="box">name@watermelonhub.com</div></div>
+        <div class="field"><label>Password</label><div class="box">••••••••</div></div>
+        <div class="btn primary" style="width:100%;text-align:center;cursor:pointer" onclick="go('a-dashboard')">Log In</div>
+      </div>
+    `
+  },
+
+  'a-dashboard': {
+    label: 'Dashboard',
+    url: 'whb.internal/admin/dashboard',
+    legend: [
+      'Team-wide numbers, not one agent\'s, this is the MD/CEO-level view of the whole outbound operation.',
+      'Sidebar is how the admin moves between sections, every item here is clickable in the real product.',
+      'Pipeline health and recent activity update automatically as agents work their leads, no manual reporting.'
+    ],
+    render: () => `
+      <div class="app-layout">
+        ${sidebarAdmin('a-dashboard')}
+        <div class="content">
+          <h2 class="screen-title">Admin Dashboard ${B(1)}</h2>
+          <p class="screen-sub">Team-wide view across every agent ${B(2)}</p>
+          <div class="cards-row">
+            <div class="stat-card"><div class="label">Calls Made</div><div class="value">▉▉▉</div></div>
+            <div class="stat-card"><div class="label">Conversions</div><div class="value">▉▉▉</div></div>
+            <div class="stat-card"><div class="label">Revenue</div><div class="value">▉▉▉</div></div>
+            <div class="stat-card"><div class="label">Pipeline Health</div><div class="value">▉▉▉</div></div>
+          </div>
+          <div class="panel">
+            <h3>Team Performance ${B(3)}</h3>
+            <div class="chartbox">chart placeholder — calls / conversions over time</div>
+          </div>
+          <div class="panel">
+            <h3>Recent Activity</h3>
+            <div class="barbox"></div><div class="barbox"></div><div class="barbox"></div>
+          </div>
+        </div>
+      </div>
+    `
+  },
+
+  'a-agents': {
+    label: 'Agents',
+    url: 'whb.internal/admin/agents',
+    legend: [
+      'Admin creates and manages every agent account; access is granted here, not by IT tickets.',
+      'Performance column gives a one-glance view of each agent without opening their pipeline.'
+    ],
+    render: () => `
+      <div class="app-layout">
+        ${sidebarAdmin('a-agents')}
+        <div class="content">
+          <div class="rowbar">
+            <div>
+              <h2 class="screen-title" style="margin-bottom:0">Manage Agents ${B(1)}</h2>
+              <p class="screen-sub">Create accounts, set permissions, track performance ${B(2)}</p>
+            </div>
+            <div class="btn primary">+ Add Agent</div>
+          </div>
+          <table class="wf">
+            <tr><th>Name</th><th>Email</th><th>Status</th><th>Leads Assigned</th><th>Performance</th><th>Actions</th></tr>
+            <tr><td>Agent A</td><td>agent.a@whb.com</td><td><span class="pill">Active</span></td><td>24</td><td>▉▉▉</td><td><span class="btn">Edit</span></td></tr>
+            <tr><td>Agent B</td><td>agent.b@whb.com</td><td><span class="pill">Active</span></td><td>18</td><td>▉▉</td><td><span class="btn">Edit</span></td></tr>
+            <tr><td>Agent C</td><td>agent.c@whb.com</td><td><span class="pill">Inactive</span></td><td>0</td><td>—</td><td><span class="btn">Edit</span></td></tr>
+          </table>
+        </div>
+      </div>
+    `
+  },
+
+  'a-leads': {
+    label: 'Lead Assignment',
+    url: 'whb.internal/admin/leads',
+    legend: [
+      'New leads land here first; from imports, referrals, or an agent\'s own lookups flagged for reassignment.',
+      'Assigning a lead here is what makes it appear in that agent\'s pipeline; this is the hand-off point.'
+    ],
+    render: () => `
+      <div class="app-layout">
+        ${sidebarAdmin('a-leads')}
+        <div class="content">
+          <h2 class="screen-title">Lead Assignment ${B(1)}</h2>
+          <p class="screen-sub">Unassigned leads on the left, assign to an agent on the right ${B(2)}</p>
+          <table class="wf">
+            <tr><th>Business</th><th>Category</th><th>Area</th><th>Assign To</th><th></th></tr>
+            <tr><td>Business 1</td><td>Retail</td><td>Gueliz</td><td><span class="pill">Choose agent ▾</span></td><td><span class="btn hot">Assign</span></td></tr>
+            <tr><td>Business 2</td><td>Hospitality</td><td>Medina</td><td><span class="pill">Choose agent ▾</span></td><td><span class="btn hot">Assign</span></td></tr>
+            <tr><td>Business 3</td><td>Retail</td><td>Sidi Ghanem</td><td><span class="pill">Choose agent ▾</span></td><td><span class="btn hot">Assign</span></td></tr>
+          </table>
+        </div>
+      </div>
+    `
+  },
+
+  'a-approvals': {
+    label: 'Approvals',
+    url: 'whb.internal/admin/approvals',
+    legend: [
+      'Every sale an agent closes stops here before it counts; no order is final without admin sign-off.',
+      'Approving here is what turns a lead\'s stage into "Won" back in the agent\'s pipeline.'
+    ],
+    render: () => `
+      <div class="app-layout">
+        ${sidebarAdmin('a-approvals')}
+        <div class="content">
+          <h2 class="screen-title">Sale Order Approvals ${B(1)}</h2>
+          <p class="screen-sub">Queue of orders submitted by agents, awaiting sign-off ${B(2)}</p>
+          <div class="lead-card">
+            <div class="top"><span>Business 4</span><span class="pill">Pending</span></div>
+            <div class="meta">Submitted by Agent A · Amount: ▉▉▉</div>
+            <div style="margin-top:10px;display:flex;gap:8px;">
+              <span class="btn primary">Approve</span><span class="btn">Reject</span>
+            </div>
+          </div>
+          <div class="lead-card">
+            <div class="top"><span>Business 5</span><span class="pill">Pending</span></div>
+            <div class="meta">Submitted by Agent B · Amount: ▉▉▉</div>
+            <div style="margin-top:10px;display:flex;gap:8px;">
+              <span class="btn primary">Approve</span><span class="btn">Reject</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    `
+  },
+
+  'g-pipeline': {
+    label: 'Pipeline',
+    url: 'whb.internal/agent/pipeline',
+    legend: [
+      'This replaces the agent\'s spreadsheet; every prospect lives in one of six stages, dragged forward as it progresses.',
+      '"Search Businesses" is the entry point into the Google Maps lookup tool, so new prospects flow straight into stage one.'
+    ],
+    render: () => `
+      <div class="app-layout">
+        ${sidebarAgent('g-pipeline')}
+        <div class="content">
+          <div class="rowbar">
+            <div>
+              <h2 class="screen-title" style="margin-bottom:0">My Pipeline ${B(1)}</h2>
+              <p class="screen-sub">Every prospect, staged from first contact to closed</p>
+            </div>
+            <div class="btn hot" onclick="go('g-lookup')">+ Search Businesses ${B(2)}</div>
+          </div>
+          <div class="kanban">
+            <div class="kcol"><h4>New</h4><div class="kcard">Business 6</div><div class="kcard">Business 7</div></div>
+            <div class="kcol"><h4>Contacted</h4><div class="kcard">Business 8</div></div>
+            <div class="kcol"><h4>Interested</h4><div class="kcard">Business 9</div></div>
+            <div class="kcol"><h4>Mock-up Sent</h4><div class="kcard">Business 10</div></div>
+            <div class="kcol"><h4>Negotiating</h4><div class="kcard" onclick="go('g-lead')" style="cursor:pointer;border-color:var(--accent)">Business 11 →</div></div>
+            <div class="kcol"><h4>Won / Lost</h4><div class="kcard">Business 12</div></div>
+          </div>
+        </div>
+      </div>
+    `
+  },
+
+  'g-lookup': {
+    label: 'Business Lookup',
+    url: 'whb.internal/agent/lookup',
+    legend: [
+      'This is the Google Maps/Places replacement; the agent types a category and area instead of manually browsing Maps.',
+      'Phone, address, and website are pulled in automatically; nothing gets copy-pasted by hand.',
+      'Adding a result creates a lead directly in "New" on the agent\'s pipeline.'
+    ],
+    render: () => `
+      <div class="app-layout">
+        ${sidebarAgent('g-lookup')}
+        <div class="content">
+          <h2 class="screen-title">Business Lookup ${B(1)}</h2>
+          <p class="screen-sub">Search a category and area — results pull straight from Google Maps ${B(2)}</p>
+          <div class="cards-row">
+            <div class="field" style="flex:1"><label>Category</label><div class="box">Hotels</div></div>
+            <div class="field" style="flex:1"><label>Area</label><div class="box">Gueliz, Marrakech</div></div>
+            <div class="btn primary" style="height:38px;align-self:flex-end;margin-bottom:10px;">Search</div>
+          </div>
+          <div class="lead-card">
+            <div class="top"><span>Riad Placeholder</span><span class="btn hot" onclick="go('g-pipeline')">+ Add to Pipeline ${B(3)}</span></div>
+            <div class="meta">+212 ▉▉▉ ▉▉▉ ▉▉▉ · Address placeholder · website.com</div>
+          </div>
+          <div class="lead-card">
+            <div class="top"><span>Hotel Placeholder</span><span class="btn hot" onclick="go('g-pipeline')">+ Add to Pipeline</span></div>
+            <div class="meta">+212 ▉▉▉ ▉▉▉ ▉▉▉ · Address placeholder · website.com</div>
+          </div>
+        </div>
+      </div>
+    `
+  },
+
+  'g-lead': {
+    label: 'Lead Detail',
+    url: 'whb.internal/agent/lead/negotiating-11',
+    legend: [
+      'Click-to-call dials straight from this screen; the call, its recording, and its outcome log here automatically via Aircall.',
+      'No separate call log or spreadsheet; the history lives on the lead itself.',
+      'Submitting a sale order sends it straight to the Admin Approval queue; the agent never fills a separate form.'
+    ],
+    render: () => `
+      <div class="app-layout">
+        ${sidebarAgent('g-lead')}
+        <div class="content">
+          <h2 class="screen-title">Business 11 <span class="pill">Negotiating</span></h2>
+          <p class="screen-sub">Lead detail — contact, calls, and sale order in one place ${B(1)}</p>
+          <div class="panel">
+            <h3>Contact</h3>
+            <div class="meta" style="color:var(--muted);font-size:12.5px;">+212 ▉▉▉ ▉▉▉ ▉▉▉ · Address placeholder · website.com</div>
+            <div style="margin-top:10px"><span class="btn primary">📞 Call Now</span></div>
+          </div>
+          <div class="panel">
+            <h3>Call Log ${B(2)}</h3>
+            <div class="barbox"></div><div class="barbox"></div>
+          </div>
+          <div class="panel">
+            <h3>Sale Order</h3>
+            <div class="field"><label>Amount</label><div class="box">▉▉▉ MAD</div></div>
+            <div class="field"><label>Notes</label><div class="box">▉▉▉▉▉▉▉▉▉▉▉▉▉▉</div></div>
+            <div class="btn primary" onclick="go('a-approvals')">Submit for Approval ${B(3)}</div>
+          </div>
+        </div>
+      </div>
+    `
+  }
+};
+
+const tabOrder = [
+  ['flow','Flow'], ['login','Login'],
+  ['a-dashboard','Admin ▸ Dashboard'], ['a-agents','Admin ▸ Agents'], ['a-leads','Admin ▸ Leads'], ['a-approvals','Admin ▸ Approvals'],
+  ['g-pipeline','Agent ▸ Pipeline'], ['g-lookup','Agent ▸ Lookup'], ['g-lead','Agent ▸ Lead Detail']
+];
+
+function renderTabs(active){
+  const el = document.getElementById('tabs');
+  el.innerHTML = tabOrder.map(([id,label], i) => {
+    const sep = (id==='a-dashboard' || id==='g-pipeline') ? '<span class="sep">|</span>' : '';
+    return sep + `<button class="${id===active?'active':''}" onclick="go('${id}')">${label}</button>`;
+  }).join('');
+}
+
+function go(id){
+  const s = screens[id];
+  document.getElementById('frame').innerHTML = s.render();
+  document.getElementById('urlbar').textContent = s.url;
+  document.getElementById('frame').insertAdjacentHTML('beforeend',
+    `<div class="legend"><h3>What this screen shows</h3>` +
+    s.legend.map((t,i)=>`<div class="legend-item"><span class="n">${i+1}</span><span>${t}</span></div>`).join('') +
+    `</div>`
+  );
+  renderTabs(id);
+}
+
+go('flow');
+</script>
+</body>
+</html>
